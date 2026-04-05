@@ -23,9 +23,6 @@ We formulate stock trading as an MDP where:
 |  **Transaction Costs** | Realistic 0.1% per trade cost modeling |
 |  **Risk Metrics** | Sharpe Ratio, Maximum Drawdown, Sortino Ratio |
 |  **Visualization** | Comprehensive plots and performance dashboards |
-|  **LaTeX Report** | Complete academic documentation |
-
----
 
 ---
 
@@ -43,7 +40,7 @@ We formulate stock trading as an MDP where:
 
 ---
 
-## 📊 Results Summary
+##  Results Summary
 
 ### Performance Comparison
 
