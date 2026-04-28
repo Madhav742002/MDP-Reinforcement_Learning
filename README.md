@@ -49,7 +49,6 @@ This project implements and compares multiple **Reinforcement Learning (RL)** al
 
 ### Prerequisites
 
-```bash
 pip install numpy pandas matplotlib seaborn yfinance tensorflow torch
 
 ## Launch the Jupyter notebook:
