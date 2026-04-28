@@ -1,72 +1,111 @@
+#  Reinforcement Learning for Algorithmic Stock Trading
+
 ##  Project Overview
 
-This project implements a **Markov Decision Process (MDP)** based **Deep Reinforcement Learning** agent for algorithmic trading in stock markets. The agent learns optimal trading strategies (Buy/Sell/Hold) by interacting with a custom trading environment using **Deep Q-Networks (DQN)**.
-
-### Problem Statement
-Financial markets are highly dynamic and non-stationary environments where traditional trading strategies often fail. This project explores whether a Deep Reinforcement Learning agent can learn adaptive trading strategies that outperform traditional buy-and-hold approaches.
-
-### Solution Approach
-We formulate stock trading as an MDP where:
-- **State**: Technical indicators (RSI, MACD, Bollinger Bands) + price data
-- **Actions**: Buy (0), Sell (1), Hold (2)
-- **Reward**: Portfolio value change with transaction cost penalty
+This project implements and compares multiple **Reinforcement Learning (RL)** algorithms for automated stock trading. The trading agents learn to make optimal decisions (Buy, Hold, Sell) based on historical market data and technical indicators. The project progresses from a classical **Q-Learning** agent to advanced **Deep Q-Networks (DQN)** and **Double DQN** architectures, demonstrating the power of deep reinforcement learning in financial applications.
 
 ---
 
 ##  Key Features
 
-|        Feature              |        Description |
-|  **MDP Formulation** | Complete mathematical framework for sequential decision making |
-|  **Deep Q-Network** | Neural network with experience replay and target networks |
-|  **Technical Indicators** | RSI, MACD, Bollinger Bands, SMA, EMA |
-|  **Real Market Data** | Yahoo Finance API integration for live data |
-|  **Transaction Costs** | Realistic 0.1% per trade cost modeling |
-|  **Risk Metrics** | Sharpe Ratio, Maximum Drawdown, Sortino Ratio |
-|  **Visualization** | Comprehensive plots and performance dashboards |
+-  **Real-time financial data fetching** using `yfinance` (AAPL stock, 3 years of data)
+-  **Technical indicator engineering**: RSI, MACD, Moving Averages (SMA/EMA), Bollinger Bands, Volatility
+-  **Custom trading environment** (MDP formulation) with realistic transaction costs and drawdown penalties
+-  **Three RL agents** implemented from scratch:
+  - Tabular Q-Learning
+  - Deep Q-Network (DQN) with Experience Replay & Target Network
+  - Double DQN (for reduced overestimation bias)
+-  **Comprehensive performance & risk analysis** including:
+  - Sharpe Ratio, Sortino Ratio, Maximum Drawdown, Calmar Ratio
+  - Beta, Alpha, Win Rate, Profit Factor
+-  **Sensitivity analysis** of hyperparameters (transaction cost, learning rate, discount factor)
+-  **Rich visualizations**: Training curves, portfolio comparison, risk dashboards, drawdown analysis
 
 ---
 
-##  Results Summary
+##  Algorithms Implemented
 
-### Performance Comparison
+| Algorithm | Description | Key Features |
+|-----------|-------------|--------------|
+| **Q-Learning** | Tabular method with state discretization | Simple, interpretable, but limited scalability |
+| **DQN** | Deep neural network for Q-value approximation | Experience replay, target network, handles continuous states |
+| **Double DQN** | Decouples action selection & evaluation | Reduces overestimation, more stable training |
 
-| Metric | DQN Agent | Buy & Hold | Improvement |
-|--------|-----------|------------|-------------|
-| **Total Return** | 52.34% | 34.56% | ↑ 17.78% |
-| **Sharpe Ratio** | 1.24 | 0.89 | ↑ 0.35 |
-| **Maximum Drawdown** | 18.5% | 32.1% | ↓ 13.6% |
-| **Win Rate** | 54.2% | 48.7% | ↑ 5.5% |
-| **Calmar Ratio** | 2.83 | 1.08 | ↑ 1.75 |
 
 ---
 
-##  Results Summary
+##  Tech Stack
 
-### Performance Comparison
+- **Python** – Core programming language
+- **TensorFlow/Keras** – Deep learning framework for DQN agents
+- **PyTorch** – Alternative DL backend (optional)
+- **yFinance** – Yahoo Finance data API
+- **Pandas / NumPy** – Data manipulation & numerical computing
+- **Matplotlib / Seaborn** – Data visualization
 
-| Metric | DQN Agent | Buy & Hold | Improvement |
-|--------|-----------|------------|-------------|
-| **Total Return** | 52.34% | 34.56% | ↑ 17.78% |
-| **Sharpe Ratio** | 1.24 | 0.89 | ↑ 0.35 |
-| **Maximum Drawdown** | 18.5% | 32.1% | ↓ 13.6% |
-| **Win Rate** | 54.2% | 48.7% | ↑ 5.5% |
-| **Calmar Ratio** | 2.83 | 1.08 | ↑ 1.75 |
+---
 
-# Core Dependencies
-tensorflow==2.12.0
-numpy==1.23.5
-pandas==1.5.3
-yfinance==0.2.28
+##  Getting Started
 
-# Visualization
-matplotlib==3.6.3
-seaborn==0.12.2
+### Prerequisites
 
-# Machine Learning
-scikit-learn==1.2.2
+```bash
+pip install numpy pandas matplotlib seaborn yfinance tensorflow torch
 
-# Utilities
-tqdm==4.65.0
-jupyter==1.0.0
+## Launch the Jupyter notebook:
+  jupyter notebook MDP_RL.ipynb
 
+ Sample Results :
+Metric	             Q-Learning	  DQN (approximate)
+Initial Capital	     $10,000	    $10,000
+Final Portfolio Value	$9,626	    $19,610
+Total Return	       -3.74%	      ~96%
+Sharpe Ratio	       -0.49	      Positive
+Maximum Drawdown	    8.85%	      Lower
 
+DQN significantly outperforms classical Q-Learning due to continuous state handling and better function approximation.
+
+The project generates several insightful plots:
+  Stock price & trading volume
+  Daily returns distribution & volatility
+  Training reward & portfolio value curves (per episode)
+  Action distribution (Buy/Hold/Sell frequency)
+  Cumulative returns comparison (RL vs Buy & Hold)
+  Drawdown analysis with maximum drawdown highlight
+  Rolling Sharpe Ratio & Beta
+  Sensitivity analysis plots for hyperparameters
+
+Risk Metrics Computed :
+- Sharpe Ratio
+- Sortino Ratio
+- Maximum Drawdown (%)
+- Calmar Ratio
+- Beta (vs Buy & Hold)
+- Alpha (Annualized %)
+- Win Rate (%)
+- Profit Factor
+- Average Win / Loss (%)
+
+Sensitivity Analysis
+We analyze how key hyperparameters affect performance:
+
+Parameter	           Values Tested
+Transaction Cost	   0, 0.001, 0.0025, 0.005, 0.01
+Learning Rate	       0.001, 0.005, 0.01, 0.05, 0.1
+Discount Factor    	 0.9, 0.95, 0.99, 0.999
+
+Key Learning Outcomes
+ State representation matters – Technical indicators provide rich market context.
+ Deep RL outperforms tabular methods – DQN handles continuous state spaces effectively.
+ Experience replay & target networks are crucial for stable DQN training.
+ Double DQN further improves stability by reducing Q-value overestimation.
+ Risk metrics are essential – High returns are meaningless without understanding drawdowns and risk-adjusted performance.
+
+References & Inspiration:
+ Mnih et al., "Human-level control through deep reinforcement learning" (DQN paper)
+ Van Hasselt et al., "Deep Reinforcement Learning with Double Q-learning"
+ Sutton & Barto, "Reinforcement Learning: An Introduction"
+
+Contributing:
+ Contributions, issues, and feature requests are welcome!
+ Feel free to check the issues page.
